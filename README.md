@@ -1,192 +1,118 @@
-# UART Communication Protocol using Verilog HDL
+# UART Communication System using Verilog HDL
 
 ## Overview
 
-This project implements a Universal Asynchronous Receiver Transmitter (UART) communication system using Verilog HDL. The design includes a UART Transmitter, UART Receiver, Baud Rate Generator, Top Module, and Testbench. The project was designed and simulated using Xilinx Vivado.
+This project implements a Universal Asynchronous Receiver Transmitter (UART) communication system using Verilog HDL. The design supports asynchronous serial communication using the standard **8N1** format (8 data bits, No parity, 1 stop bit). The project includes a baud rate generator, UART transmitter, UART receiver, top-level integration module, and a testbench for simulation.
 
-The UART communication is verified using a loopback configuration, where the transmitter output (TX) is directly connected to the receiver input (RX). The transmitted data is successfully received and verified through simulation.
+The design has been verified using Xilinx Vivado through behavioral simulation and synthesis.
 
 ---
 
 ## Features
 
-- UART Transmitter
-- UART Receiver
+- Verilog HDL implementation
+- UART Transmitter (TX)
+- UART Receiver (RX)
 - Baud Rate Generator
-- Loopback Communication
-- Finite State Machine (FSM) Based Design
-- 8-bit Data Transmission
-- Configurable Baud Rate
-- Functional Simulation using Vivado
+- Top-level UART Integration
+- Loopback Communication Verification
+- Behavioral Simulation
 - RTL Schematic Generation
+- FPGA Synthesis using Vivado
 
 ---
 
-## Project Specifications
+## UART Configuration
 
 | Parameter | Value |
 |-----------|-------|
-| Language | Verilog HDL |
-| Tool | Xilinx Vivado 2017.3 |
+| Data Bits | 8 |
+| Parity | None |
+| Stop Bits | 1 |
+| UART Format | 8N1 |
 | Clock Frequency | 50 MHz |
 | Baud Rate | 9600 bps |
-| Data Bits | 8 |
-| Start Bits | 1 |
-| Stop Bits | 1 |
-| Parity | None |
 
----
-
-## Project Structure
-
-```
-UART_Communication/
-│
-├── rtl/
-│   ├── baud_generator.v
-│   ├── uart_tx.v
-│   ├── uart_rx.v
-│   └── uart_top.v
-│
-├── testbench/
-│   └── uart_tb.v
-│
-├── simulation/
-│   ├── RTL_uart1.png
-│   └── simulation_tx_uart.png
-│   |__simulation_rx_uart.png
-├── synthesis/
-│   └── synthesis_uart.png
-│
-├── block_diagram/
-│   └── uart_diagram.png
-│
-├── state_diagram/
-│   ├── uart_tx_state.png
-│   └── uart_rx_state.png
-│
-├── documentation/
-│   └── proj3(1).pdf
-│
-└── README.md
-```
 
 ---
 
 ## Module Description
 
-### Baud Generator
-
-Generates baud rate timing pulses required for serial communication.
+### Baud Rate Generator
+Generates the baud tick required for UART communication by dividing the system clock to the desired baud rate.
 
 ### UART Transmitter
-
-Converts parallel 8-bit data into serial format by transmitting:
-
-- Start Bit
-- 8 Data Bits (LSB First)
-- Stop Bit
+Converts 8-bit parallel input data into serial data by transmitting a start bit, eight data bits (LSB first), and a stop bit.
 
 ### UART Receiver
-
-Receives serial data and reconstructs the original 8-bit parallel data.
+Receives serial data, detects the start bit, samples the incoming bits using the baud tick, reconstructs the original byte, and asserts the `rx_done` signal after successful reception.
 
 ### UART Top Module
-
-Integrates all UART modules including the baud generator, transmitter, and receiver.
+Integrates the baud rate generator, transmitter, and receiver into a complete UART communication system.
 
 ### Testbench
-
-Generates clock, reset, transmit enable signal, and verifies UART communication using loopback testing.
+Applies input stimuli, performs loopback testing by connecting TX to RX, and verifies successful transmission and reception.
 
 ---
 
 ## Simulation
 
-The UART system was simulated in Xilinx Vivado.
+Simulation was performed using Xilinx Vivado.
 
-Simulation verifies:
+The loopback configuration connects the transmitter output directly to the receiver input.
 
-- Clock generation
-- Reset operation
-- Data transmission
-- Data reception
-- FSM transitions
-- Loopback communication
-- Successful reception of transmitted data
+### Verification
 
-Example:
-
-```
-Input Data  = 8'h55
-Output Data = 8'h55
-rx_done     = 1
-```
+- Input Data : `8'h55`
+- Received Data : `8'h55`
+- Baud Rate : `9600 bps`
+- Result : Communication Successful
 
 ---
 
-## RTL Design
+## Synthesis
 
-RTL synthesis confirms successful hardware implementation of the UART communication system.
+The design was synthesized using Xilinx Vivado.
 
-The RTL schematic shows the interconnection of:
+The RTL schematic confirms the correct hardware implementation of the UART communication system.
 
-- Baud Generator
-- UART Transmitter
-- UART Receiver
-- Top Module
+The synthesis results demonstrate that the design requires minimal FPGA resources and is suitable for embedded communication applications.
 
 ---
 
 ## Applications
 
-- Embedded Systems
 - FPGA Communication
-- Microcontroller Communication
+- Embedded Systems
+- Microcontroller Interfaces
 - GPS Modules
 - Bluetooth Modules
 - Serial Debugging
-- Sensor Interfaces
-
----
-
-## Advantages
-
-- Simple hardware implementation
-- Low resource utilization
-- Reliable serial communication
-- Easy FPGA implementation
-- Configurable baud rate
-- Widely supported protocol
+- Industrial Automation
 
 ---
 
 ## Future Scope
 
-- Configurable data length
-- Parity Bit Support
-- FIFO Buffer
-- Interrupt Support
-- Multiple UART Channels
-- Error Detection
-- FPGA Hardware Implementation
+- Support for configurable baud rates
+- Parity bit implementation
+- FIFO-based UART communication
+- Interrupt-driven UART controller
+- RS-232/RS-485 interface support
+- FPGA hardware implementation
+- SoC integration
 
 ---
 
-## Software Used
+## Tools Used
 
-- Xilinx Vivado 2017.3
 - Verilog HDL
+- Xilinx Vivado Design Suite
 
 ---
 
 ## Author
 
-- **Name:** Vasamshetti Meghana  
-- **Intern ID:** CITS691  
-- **Branch:** Electronics and Communication Engineering (ECE)  
-- **Duration:** 6 Weeks  
-- **Domain:** VLSI / Digital Design / Verilog HDL  
-VLSI Internship Project
+**Meghana Vasamshetti**
 
-UART Communication Protocol using Verilog HDL
+Project: UART Communication System using Verilog HDL
